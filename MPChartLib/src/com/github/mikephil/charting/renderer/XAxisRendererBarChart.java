@@ -53,6 +53,8 @@ public class XAxisRendererBarChart extends XAxisRenderer {
                     && i < mXAxis.getValues().size()) {
 
                 String label = mXAxis.getValues().get(i);
+                int color = mXAxis.getTextColor(i);
+                mAxisLabelPaint.setColor(color);
 
                 if (mXAxis.isAvoidFirstLastClippingEnabled()) {
 

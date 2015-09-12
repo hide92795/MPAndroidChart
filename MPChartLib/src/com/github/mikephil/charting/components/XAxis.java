@@ -1,6 +1,11 @@
 
 package com.github.mikephil.charting.components;
 
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import android.content.Context;
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +20,8 @@ public class XAxis extends AxisBase {
 
     /** the arraylist containing all the x-axis labels */
     protected List<String> mValues = new ArrayList<String>();
+
+    private List<Integer> mTextColor = new ArrayList<>();
 
     /**
      * width of the x-axis labels in pixels - this is calculated by the
@@ -70,6 +77,7 @@ public class XAxis extends AxisBase {
 
     public XAxis() {
         super();
+        mTextColor.add(Color.BLACK);
     }
 
     /**
@@ -181,6 +189,53 @@ public class XAxis extends AxisBase {
      */
     public List<String> getValues() {
         return mValues;
+    }
+
+    public void setTextColors(List<Integer> colors) {
+        this.mTextColor = colors;
+    }
+
+    public void setTextColors(int[] colors) {
+        this.mTextColor = ColorTemplate.createColors(colors);
+    }
+
+    public void setTextColors(int[] colors, Context c) {
+
+        List<Integer> clrs = new ArrayList<Integer>();
+
+        for (int color : colors) {
+            clrs.add(c.getResources().getColor(color));
+        }
+
+        mTextColor = clrs;
+    }
+
+    public void addTextColor(int color) {
+        if (mTextColor == null) {
+            mTextColor = new ArrayList<Integer>();
+        }
+        mTextColor.add(color);
+    }
+
+    public void setTextColor(int color) {
+        resetTextColors();
+        mTextColor.add(color);
+    }
+
+    public List<Integer> getTextColors() {
+        return mTextColor;
+    }
+
+    public int getTextColor(int index) {
+        return mTextColor.get(index % mTextColor.size());
+    }
+
+    public int getTextColor() {
+        return mTextColor.get(0);
+    }
+
+    public void resetTextColors() {
+        mTextColor = new ArrayList<Integer>();
     }
 
     @Override
