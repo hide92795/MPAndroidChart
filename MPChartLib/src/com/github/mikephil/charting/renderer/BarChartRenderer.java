@@ -228,6 +228,7 @@ public class BarChartRenderer extends DataRenderer {
 
                         float val = entries.get(j / 2).getVal();
 
+                        mValuePaint.setColor(dataSet.getValueTextColor(j / 2));
                         drawValue(c, formatter.getFormattedValue(val), valuePoints[j],
                                 valuePoints[j + 1] + (val >= 0 ? posOffset : negOffset));
                     }
@@ -253,6 +254,7 @@ public class BarChartRenderer extends DataRenderer {
                                     || !mViewPortHandler.isInBoundsLeft(valuePoints[j]))
                                 continue;
 
+                            mValuePaint.setColor(dataSet.getValueTextColor(j / 2));
                             drawValue(c, formatter.getFormattedValue(e.getVal()), valuePoints[j],
                                     valuePoints[j + 1] + (e.getVal() >= 0 ? posOffset : negOffset));
 
@@ -295,6 +297,7 @@ public class BarChartRenderer extends DataRenderer {
                                         || !mViewPortHandler.isInBoundsLeft(x))
                                     continue;
 
+                                mValuePaint.setColor(dataSet.getValueTextColor(j / 2));
                                 drawValue(c, formatter.getFormattedValue(vals[k / 2]), x, y);
                             }
                         }

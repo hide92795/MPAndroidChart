@@ -55,7 +55,7 @@ public abstract class DataSet<T extends Entry> {
     protected boolean mDrawValues = true;
 
     /** the color used for the value-text */
-    private int mValueColor = Color.BLACK;
+    private List<Integer> mTextColor = null;
 
     /** the size of the value-text labels */
     private float mValueTextSize = 17f;
@@ -89,9 +89,11 @@ public abstract class DataSet<T extends Entry> {
             mYVals = new ArrayList<T>();
 
         mColors = new ArrayList<Integer>();
+        mTextColor = new ArrayList<Integer>();
 
         // default color
         mColors.add(Color.rgb(140, 234, 255));
+        mTextColor.add(Color.BLACK);
 
         calcMinMax(mLastStart, mLastEnd);
         calcYValueSum();
@@ -775,17 +777,51 @@ public abstract class DataSet<T extends Entry> {
         return false;
     }
 
-    /**
-     * Sets the color the value-labels of this DataSet should have.
-     * 
-     * @param color
-     */
+    public void setValueTextColors(List<Integer> colors) {
+        this.mTextColor = colors;
+    }
+
+    public void setValueTextColors(int[] colors) {
+        this.mTextColor = ColorTemplate.createColors(colors);
+    }
+
+    public void setValueTextColors(int[] colors, Context c) {
+
+        List<Integer> clrs = new ArrayList<Integer>();
+
+        for (int color : colors) {
+            clrs.add(c.getResources().getColor(color));
+        }
+
+        mTextColor = clrs;
+    }
+
+    public void addValueTextColor(int color) {
+        if (mTextColor == null) {
+            mTextColor = new ArrayList<Integer>();
+        }
+        mTextColor.add(color);
+    }
+
     public void setValueTextColor(int color) {
-        mValueColor = color;
+        resetValueTextColors();
+        mTextColor.add(color);
+    }
+
+    public List<Integer> getValueTextColors() {
+        return mTextColor;
+    }
+
+    public int getValueTextColor(int index) {
+        return mTextColor.get(index % mTextColor.size());
     }
 
     public int getValueTextColor() {
-        return mValueColor;
+        return mTextColor.get(0);
+    }
+
+    public void resetValueTextColors() {
+        mTextColor = new ArrayList<Integer>();
     }
 
     /**
